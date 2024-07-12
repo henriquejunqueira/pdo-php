@@ -10,34 +10,28 @@ $conn = getConnection();
 
 try{
 
-  $sql = 'INSERT INTO produtos (descricao, qtd, valor) VALUES (:desc,:qtd,:valor)';
+  $sql = 'UPDATE produtos SET descricao = :desc, qtd = :qtd, valor = :valor WHERE id = :id';
   
-  $descricao = 'Arroz 2';
+  $descricao = 'Feijão 1';
   $qtd = 11;
   $valor = 11.80;
+  $id = 3;
 
   $stmt = $conn->prepare($sql);
-
-  // $stmt->bindValue(1, 'Arroz');
-  // $stmt->bindValue(2, 10);
-  // $stmt->bindValue(3, 4.50);
-
-  // $stmt->bindValue(1, 'Feijão');
-  // $stmt->bindValue(2, 5);
-  // $stmt->bindValue(3, 5.50);
 
   $stmt->bindParam(':desc', $descricao);
   $stmt->bindParam(':qtd', $qtd);
   $stmt->bindParam(':valor', $valor);
+  $stmt->bindParam(':id', $id);
 
   if($stmt->execute()){
-    echo 'Salvo com sucesso!';
+    echo 'Atualizado com sucesso!';
   }else{
-    echo 'Erro ao salvar!';
+    echo 'Erro ao atualizar!';
   }
 
 } catch (PDOException $e) {
-  echo 'Erro ao salvar: ' . $e->getMessage();
+  echo 'Erro ao atualizar: ' . $e->getMessage();
 }
 
 ?>
